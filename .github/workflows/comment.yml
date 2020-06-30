@@ -1,0 +1,36 @@
+name: Diff-Report
+#fake change
+on:
+ pull_request:
+   types: [opened]
+ pull_request_review_comment:
+   types: [created]
+# push:
+#    branches: [ master ]
+#  pull_request:
+#    branches: [ master ]
+
+jobs:
+  make_report:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+#    - uses: actions/checkout@v2
+#    - uses: act
+#     - uses: actions/checkout@v2
+#       with:
+#         repository: 'checkstyle/contribution' 
+    - name: Checkout
+      uses: action/checkout@v1
+      
+    - name: Comment PR
+      uses: thollander/actions-comment-pull-request@master
+      with:
+        message: 'Example of message!'
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+ 
+#     - name: Write comment
+#       run: |
+#        cd checkstyle-tester
+#        ls -la
