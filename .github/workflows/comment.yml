@@ -22,7 +22,7 @@ jobs:
 #       with:
 #         repository: 'checkstyle/contribution' 
     - name: Checkout
-      uses: action/checkout@v2
+      uses: actions/checkout@v1
       
     - name: Comment PR
       uses: thollander/actions-comment-pull-request@master
