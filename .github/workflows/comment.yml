@@ -12,7 +12,8 @@ jobs:
       uses: actions/checkout@v1
       
     - name: Comment PR
-      uses: thollander/actions-comment-pull-request@master
+#      uses: thollander/actions-comment-pull-request@master
+      uses:  kate2513/javascript-test-action@master 
       with:
         message: 'Example of message!'
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
