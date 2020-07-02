@@ -1,6 +1,6 @@
 name: Diff-Report
 
-on: [pull_request]
+on: [pull_request, issue_comment]
 
 jobs:
   make_report:
