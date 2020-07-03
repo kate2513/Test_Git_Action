@@ -8,8 +8,8 @@ jobs:
 
     steps:
 
-    - name: Checkout
-      uses: actions/checkout@v1
+#    - name: Checkout
+#      uses: actions/checkout@v1
       
     - name: Comment PR
 #      uses: thollander/actions-comment-pull-request@master
