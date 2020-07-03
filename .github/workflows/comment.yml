@@ -8,7 +8,7 @@ on:
 jobs:
   make_report:
     env:
-      pr_body: '${{ github.sha }}'
+      pr_body: ${{ toJson(github) }}
     runs-on: ubuntu-latest
 
     steps:
