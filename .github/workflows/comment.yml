@@ -8,7 +8,7 @@ on:
 jobs:
   make_report:
     env:
-      pr_body: ${{ github.context.payload.pull_request.body }}
+      pr_body: '${{ github.context.payload.pull_request.body }}'
     runs-on: ubuntu-latest
 
     steps:
