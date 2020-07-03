@@ -8,12 +8,16 @@ on:
 jobs:
   make_report:
     env:
-      pr_body: ${{ toJson(github) }}
+      pr_body: ${{ github.event.pull_request.body }}
+      pr_body2: ${{ github.event.pull_request.body.event.pull_request.body}}
     runs-on: ubuntu-latest
 
     steps:
      - name: print variable
-       run: echo "${{env.pr_body}}"
+       run: |
+        echo "${{env.pr_body}}"
+        echo "-----------------"
+        echo "${{env.pr_body2}}"
 #    - name: Checkout
 #      uses: actions/checkout@v1
       
