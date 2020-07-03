@@ -14,10 +14,10 @@ jobs:
     steps:
      - name: print variable
        run: |
-        echo "${{env.pr_body}}"
-        "${{env.pr_body2}}" > text
+        echo "${{env.pr_body}}" > text
         ls -la
         cat text
+
 #    - name: Checkout
 #      uses: actions/checkout@v1
       
