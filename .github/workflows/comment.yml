@@ -9,15 +9,15 @@ jobs:
   make_report:
     env:
       pr_body: ${{ github.event.pull_request.body }}
-      pr_body2: ${{ github.event.pull_request.body.event.pull_request.body}}
     runs-on: ubuntu-latest
 
     steps:
      - name: print variable
        run: |
         echo "${{env.pr_body}}"
-        echo "-----------------"
-        echo "${{env.pr_body2}}"
+        "${{env.pr_body2}}" > text
+        ls -la
+        cat text
 #    - name: Checkout
 #      uses: actions/checkout@v1
       
