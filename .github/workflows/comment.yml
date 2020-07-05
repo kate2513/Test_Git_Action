@@ -31,8 +31,6 @@ jobs:
      - name: 2 lines from .pro to env
        run: |
         sed -n 1,2p proj.pro > temp
-        cat temp > ${{env.pr_body}}
-        echo '${{env.pr_body}}'
         cat temp  
 #    - name: Checkout
 #      uses: actions/checkout@v1
