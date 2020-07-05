@@ -34,7 +34,8 @@ jobs:
         sed -n 1,2p config.xml > temp
         cat temp >> message
         cat message
-        echo "${{toJson(env)}}"
+        ${{env.pr_body = message}}
+        echo ${{env.pr_body}}
 #    - name: Checkout
 #      uses: actions/checkout@v1
       
