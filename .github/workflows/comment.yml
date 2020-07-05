@@ -43,6 +43,7 @@ jobs:
         echo Name of head branch: ${GITHUB_HEAD_REF} > temp
         cat temp >> message
         echo Name of base branch: ${GITHUB_BASE_REF} > temp
+        cat temp >> message
         cat message
         
      - name: Set output
