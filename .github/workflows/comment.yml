@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-     - name: print variable
+     - name: Parse PR body
        run: |
         echo "${{env.pr_body}}" > text
         grep "^Diff Regression projects:" text > temp
@@ -21,9 +21,17 @@ jobs:
         sed 's/Diff Regression config: //' temp > config
         cat proj
         cat config
+        
+     - name: Download files 
+       run: |
         wget -q -i proj -O proj.pro
         wget -q -i config -O config.xml
         ls -la
+        
+     - name: 2 lines from .pro to env
+       run: |
+        sed -n 1,2p proj.pro > ${{env.pr_body}}
+        echo '${{env.pr_body}}'   
 #    - name: Checkout
 #      uses: actions/checkout@v1
       
