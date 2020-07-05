@@ -45,7 +45,6 @@ jobs:
         echo Name of base branch: ${GITHUB_BASE_REF} > temp
         cat temp >> message
         cat message
-        echo ${{toJson(github}}
         
      - name: Set output
        id: out
