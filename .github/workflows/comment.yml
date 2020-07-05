@@ -10,6 +10,7 @@ jobs:
     env:
       pr_body: ${{ github.event.pull_request.body }}
       issue_body: ${{github.event.issue.body}}
+      branch: ${{github.head_ref}}
     runs-on: ubuntu-latest
 
     steps: 
@@ -40,7 +41,10 @@ jobs:
         sed -n 1,2p proj.pro > message
         sed -n 1,2p config.xml > temp
         cat temp >> message
+        echo 'Name of branch: ${{env.branch}}' > temp
+        cat temp >> message
         cat message
+        
      - name: Set output
        id: out
        run: echo ::set-output name=message::$(cat message)   
