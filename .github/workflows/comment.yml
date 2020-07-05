@@ -42,8 +42,8 @@ jobs:
 #    - name: Checkout
 #      uses: actions/checkout@v1
       
-#     - name: Comment PR
-#       uses:  kate2513/javascript-test-action@master 
-#       with:
-#        message: 'Example of message!'
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     - name: Comment PR
+       uses:  kate2513/javascript-test-action@master 
+       with:
+        message: ${{steps.out.outputs.message}}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
