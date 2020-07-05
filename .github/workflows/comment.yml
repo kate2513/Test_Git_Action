@@ -12,14 +12,13 @@ jobs:
       issue_body: ${{github.event.issue.body}}
     runs-on: ubuntu-latest
 
-    steps:
-     - name: PR body
-       run: echo "${{env.pr_body}}" > text
-       if: ${{github.event}} == 'pull_request' 
+    steps: 
        
-     - name: Issue body
-       run: echo "${{env.issue_body}}" > text
-       if: ${{github.event}} == 'issue'
+     - name: Get body
+       run: |
+        echo "${{env.issue_body}}" > text
+        echo "${{env.pr_body}}" > text_pr
+        cat text_pr >> text
        
      - name: Parse PR body
        run: |
