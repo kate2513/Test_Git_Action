@@ -21,8 +21,8 @@ jobs:
         sed 's/Diff Regression config: //' temp > config
         cat proj
         cat config
-        wget -i proj
-        wget -i config
+        wget -q -i proj -O proj.pro
+        wget -q -i config -O config.xml
         ls -la
 #    - name: Checkout
 #      uses: actions/checkout@v1
