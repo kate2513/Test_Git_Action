@@ -15,10 +15,10 @@ jobs:
      - name: print variable
        run: |
         echo "${{env.pr_body}}" > text
-        grep "^Diff Regression projects:" text > proj
-        grep "^Diff Regression config:" text > config
-        sed 's/Diff Regression projects: //' proj
-        sed 's/Diff Regression config: //' config
+        grep "^Diff Regression projects:" text > temp
+        sed 's/Diff Regression projects: //' temp > proj
+        grep "^Diff Regression config:" text > temp
+        sed 's/Diff Regression config: //' temp > config
         cat proj
         cat config
 #    - name: Checkout
