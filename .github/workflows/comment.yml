@@ -9,12 +9,20 @@ jobs:
   make_report:
     env:
       pr_body: ${{ github.event.pull_request.body }}
+      issue_body: ${{github.event.issue.body}}
     runs-on: ubuntu-latest
 
     steps:
+     - name: PR body
+       run: echo "${{env.pr_body}}" > text
+       if: ${{github.event}} == 'pull_request' 
+       
+     - name: Issue body
+       run: echo "${{env.issue_body}}" > text
+       if: ${{github.event}} == 'issue'
+       
      - name: Parse PR body
        run: |
-        echo "${{env.pr_body}}" > text
         grep "^Diff Regression projects:" text > temp
         sed 's/Diff Regression projects: //' temp > proj
         grep "^Diff Regression config:" text > temp
@@ -31,7 +39,7 @@ jobs:
      - name: Create a message
        run: |
         sed -n 1,2p proj.pro > message
-        sed -n 3,4p config.xml > temp
+        sed -n 1,2p config.xml > temp
         cat temp >> message
         cat message
      - name: Set output
