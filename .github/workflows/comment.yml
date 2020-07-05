@@ -28,10 +28,12 @@ jobs:
         wget -q -i config -O config.xml
         ls -la
         
-     - name: 2 lines from .pro to env
+     - name: Create a message
        run: |
-        sed -n 1,2p proj.pro > temp
-        cat temp  
+        sed -n 1,2p proj.pro > message
+        sed -n 1,2p config.xml > temp
+        cat temp >> message
+        cat message
 #    - name: Checkout
 #      uses: actions/checkout@v1
       
