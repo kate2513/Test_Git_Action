@@ -34,9 +34,11 @@ jobs:
         sed -n 1,2p config.xml > temp
         cat temp >> message
         cat message
-        echo "::set-env name=pr_body::$(cat message)"
-        echo $pr_body
-        echo ${{env.pr_body}}
+     - name: Set output
+       id: out
+       run: echo ::set-output name=message::$(cat message)   
+     - name: print output
+       run: echo '${{steps.out.outputs.message}}'
 #    - name: Checkout
 #      uses: actions/checkout@v1
       
