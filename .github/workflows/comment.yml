@@ -59,10 +59,32 @@ jobs:
         repository: checkstyle/contribution
         path: contribution
          
-     - name: Print branch
-       run: |
-         echo ${GITHUB_HEAD_REF}
+     - name: Download site
+       uses: actions/checkout@v2
+       with:
+         repository: kate2513/kate2513.github.io
+         path: kate2513.github.io
        
+     - name: Check
+       run: ls -la
+       
+     - name: Add file
+       run: |
+        echo "test message" > message
+        cp message ./kate2513.github.io/
+        cd kate2513.github.io
+        ls -la
+        git add --all
+        git config --local user.email "katy.s.golovina@gmail.com"
+        git config --local user.name "kate2513"
+        git commit -m "Commit from GitHub Action"
+       
+     - name: Push Report
+       uses: ad-m/github-push-action@v0.6.0
+       with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        directory: kate2513.github.io
+        repository: kate2513/kate2513.github.io
 #     - name: Try groovy
 #       run: |
 #         mv config.xml ./contribution/checkstyle-tester/
