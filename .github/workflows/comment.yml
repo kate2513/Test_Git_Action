@@ -20,7 +20,7 @@ jobs:
         echo "${{env.issue_body}}" > text
         echo "${{env.pr_body}}" > text_pr
         cat text_pr >> text
-        echo $GITHUB_CONTEXT.actor
+        echo ${GITHUB_CONTEXT}
        
      - name: Parse PR body
        run: |
@@ -62,18 +62,18 @@ jobs:
        run: |
          echo ${GITHUB_HEAD_REF}
        
-     - name: Try groovy
-       run: |
-         mv config.xml ./contribution/checkstyle-tester/
-         mv proj.properties ./contribution/checkstyle-tester/
-         ls -la
-         cd contribution/checkstyle-tester
-         ls -la
-         java -version
-         mvn -version
-         sudo apt install groovy
-         groovy -version
-         groovy diff.groovy -r ../../checkstyle -b master -p new_branch -c config.xml -l proj.properties
+#     - name: Try groovy
+#       run: |
+#         mv config.xml ./contribution/checkstyle-tester/
+#         mv proj.properties ./contribution/checkstyle-tester/
+#         ls -la
+#         cd contribution/checkstyle-tester
+#         ls -la
+#         java -version
+#         mvn -version
+#         sudo apt install groovy
+#         groovy -version
+#         groovy diff.groovy -r ../../checkstyle -b master -p new_branch -c config.xml -l proj.properties
      
      - name: Check what in dir
        run: ls -la
