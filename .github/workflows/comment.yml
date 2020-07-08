@@ -48,6 +48,7 @@ jobs:
        run: |
          cd checkstyle
          git branch -r
+         git checkput -b new_branch
          cd ../
      
      - name: Download contribution
@@ -68,7 +69,7 @@ jobs:
          mvn -version
          sudo apt install groovy
          groovy -version
-         groovy diff.groovy -r ../../checkstyle -b master -p origin/romani-patch-1 -c ../../config.xml -l ../../proj.pro
+         groovy diff.groovy -r ../../checkstyle -b master -p new_branch -c ../../config.xml -l ../../proj.pro
      
      - name: Check what in dir
        run: ls -la
