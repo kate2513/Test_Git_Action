@@ -41,6 +41,12 @@ jobs:
        with:
         repository: checkstyle/checkstyle
         path: checkstyle
+    
+     - name: Check branches
+       run: |
+         cd checkstyle
+         git branch
+         cd ../
      
      - name: Download contribution
        uses: actions/checkout@v2
