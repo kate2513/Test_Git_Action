@@ -63,8 +63,7 @@ jobs:
        with:
          repository: kate2513/kate2513.github.io
          path: ./kate2513.github.io
-         token: ${{secrets.MY_TOKEN}}
-       
+              
      - name: Check
        run: ls -la
        
