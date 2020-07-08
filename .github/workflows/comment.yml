@@ -52,6 +52,12 @@ jobs:
        run: |
          echo ${GITHUB_HEAD_REF}
        
+     - name: Try groovy
+       run: |
+         cd contribution/checkstyle-tester
+         ls -la
+         groovy diff.groovy -r ../../checkstyle -b master -p ${GITHUB_HEAD_REF} -c ../../config.xml -l ../../proj.pro
+     
      - name: Check what in dir
        run: ls -la
 #     - name: Create a message
