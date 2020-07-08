@@ -48,7 +48,7 @@ jobs:
        run: |
          cd checkstyle
          git branch -r
-         git checkput -b new_branch
+         git checkout -b new_branch
          cd ../
      
      - name: Download contribution
