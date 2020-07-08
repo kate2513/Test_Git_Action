@@ -36,16 +36,28 @@ jobs:
         wget -q -i config -O config.xml
         ls -la
         
-     - name: Create a message
-       run: |
-        sed -n 1,2p proj.pro > message
-        sed -n 1,2p config.xml > temp
-        cat temp >> message
-        echo Name of head branch: ${GITHUB_HEAD_REF} > temp
-        cat temp >> message
-        echo Name of base branch: ${GITHUB_BASE_REF} > temp
-        cat temp >> message
-        cat message
+     - name: Download checkstyle
+       uses: actions/checkout@v2
+        with:
+         repository: checkstyle/checkstyle
+     
+     - name: Download contribution
+       uses: actions/checkout@v2
+        with:
+         repository: checkstyle/contribution
+         
+     - name: Check what in dir
+       run: ls -la
+#     - name: Create a message
+#       run: |
+#        sed -n 1,2p proj.pro > message
+#        sed -n 1,2p config.xml > temp
+#        cat temp >> message
+#        echo Name of head branch: ${GITHUB_HEAD_REF} > temp
+#        cat temp >> message
+#        echo Name of base branch: ${GITHUB_BASE_REF} > temp
+#        cat temp >> message
+#        cat message
         
      - name: Set output
        id: out
