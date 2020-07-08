@@ -64,6 +64,8 @@ jobs:
        with:
          repository: kate2513/kate2513.github.io
          path: kate2513.github.io
+         persist-credentials: false
+         fetch-depth: 0
        
      - name: Check
        run: ls -la
@@ -77,7 +79,7 @@ jobs:
         git add --all
         git config --local user.email "katy.s.golovina@gmail.com"
         git config --local user.name "kate2513"
-        git commit -m "Commit from GitHub Action"
+        git commit -m "Commit from GitHub Action" -a
        
      - name: Push Report
        uses: ad-m/github-push-action@v0.6.0
