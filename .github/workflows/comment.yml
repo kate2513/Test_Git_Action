@@ -41,6 +41,7 @@ jobs:
        with:
         repository: checkstyle/checkstyle
         path: checkstyle
+        fetch-depth: 0
     
      - name: Check branches
        run: |
