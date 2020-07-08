@@ -41,7 +41,7 @@ jobs:
      - name: Download checkstyle
        uses: actions/checkout@v2
        with:
-        repository: ${{username}}/checkstyle
+        repository: ${{env.username}}/checkstyle
         path: checkstyle
         fetch-depth: 0
         
