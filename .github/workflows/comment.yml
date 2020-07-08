@@ -38,13 +38,13 @@ jobs:
         
      - name: Download checkstyle
        uses: actions/checkout@v2
-        with:
-         repository: checkstyle/checkstyle
+       with:
+        repository: checkstyle/checkstyle
      
      - name: Download contribution
        uses: actions/checkout@v2
-        with:
-         repository: checkstyle/contribution
+       with:
+        repository: checkstyle/contribution
          
      - name: Check what in dir
        run: ls -la
