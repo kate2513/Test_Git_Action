@@ -40,11 +40,13 @@ jobs:
        uses: actions/checkout@v2
        with:
         repository: checkstyle/checkstyle
+        path: checkstyle
      
      - name: Download contribution
        uses: actions/checkout@v2
        with:
         repository: checkstyle/contribution
+        path: contribution
          
      - name: Check what in dir
        run: ls -la
