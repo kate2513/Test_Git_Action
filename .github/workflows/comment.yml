@@ -72,7 +72,7 @@ jobs:
          mvn -version
          sudo apt install groovy
          groovy -version
-         groovy diff.groovy -r ../../checkstyle -b master -p new_branch -c ../../config.xml -l ../../proj.properties
+         groovy diff.groovy -r ../../checkstyle -b master -p new_branch -c config.xml -l proj.properties
      
      - name: Check what in dir
        run: ls -la
