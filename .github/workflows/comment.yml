@@ -58,31 +58,6 @@ jobs:
         repository: checkstyle/contribution
         path: contribution
          
-     - name: Download site
-       uses: actions/checkout@v2
-       with:
-         repository: kate2513/kate2513.github.io
-         path: ./kate2513.github.io
-              
-     - name: Check
-       run: ls -la
-       
-     - name: Add file
-       run: |
-        cd kate2513.github.io
-        ls -la
-        mkdir test
-        cd test
-        echo "test message" > message
-        ls -la
-        cd ../
-        
-     - name: Push
-       uses: JamesIves/github-pages-deploy-action@releases/v3
-       with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: gh-pages # The branch the action should deploy to.
-        FOLDER: test
 
 
 #     - name: Try groovy
