@@ -32,7 +32,7 @@ jobs:
         
      - name: Download files 
        run: |
-        wget -q -i proj -O proj.pro
+        wget -q -i proj -O proj.properties
         wget -q -i config -O config.xml
         ls -la
         
@@ -63,6 +63,8 @@ jobs:
        
      - name: Try groovy
        run: |
+         mv config.xml ./contribution/checkstyle-tester/
+         mv proj.properties ./contribution/checkstyle-tester/
          ls -la
          cd contribution/checkstyle-tester
          ls -la
@@ -70,13 +72,13 @@ jobs:
          mvn -version
          sudo apt install groovy
          groovy -version
-         groovy diff.groovy -r ../../checkstyle -b master -p new_branch -c ../../config.xml -l ../../proj.pro
+         groovy diff.groovy -r ../../checkstyle -b master -p new_branch -c ../../config.xml -l ../../proj.properties
      
      - name: Check what in dir
        run: ls -la
 #     - name: Create a message
 #       run: |
-#        sed -n 1,2p proj.pro > message
+#        sed -n 1,2p proj.properties > message
 #        sed -n 1,2p config.xml > temp
 #        cat temp >> message
 #        echo Name of head branch: ${GITHUB_HEAD_REF} > temp
