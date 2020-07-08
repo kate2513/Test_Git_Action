@@ -20,6 +20,7 @@ jobs:
         echo "${{env.issue_body}}" > text
         echo "${{env.pr_body}}" > text_pr
         cat text_pr >> text
+        echo $GITHUB_CONTEXT.actor
        
      - name: Parse PR body
        run: |
