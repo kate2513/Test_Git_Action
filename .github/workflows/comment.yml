@@ -62,6 +62,7 @@ jobs:
      - name: Download site
        uses: actions/checkout@v2
        with:
+         token: ${{secrets.MY_TOKEN}}
          repository: kate2513/kate2513.github.io
          path: kate2513.github.io
          persist-credentials: false
