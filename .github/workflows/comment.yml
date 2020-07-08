@@ -65,24 +65,33 @@ jobs:
          path: ./kate2513.github.io
 
      - name: Check
-       run: ls -la
-
-     - name: Add file
        run: |
+        ls -la
         cd kate2513.github.io
         ls -la
-        mkdir test
-        cd test
-        echo "test message" > message
-        ls -la
-        cd ../
-        
-     - name: Push
-       uses: JamesIves/github-pages-deploy-action@releases/v3
+
+     - name: Gen dummy page
+       run: |
+          mkdir public
+          cat > public/index.html <<EOL
+          <!doctype html>
+          <html>
+            <head>
+              <title>GitHub Pages deployed!</title>
+            </head>
+            <body>
+              <p>GitHub Pages with <strong>${{ github.sha }}</strong> commit ID has been deployed through <a href="https://github.com/marketplace/actions/github-pages">GitHub Pages action</a> successfully.</p>
+            </body>
+          </html>
+          EOL
+     - name: Deploy to GitHub Pages
+       if: success()
+       uses: crazy-max/ghaction-github-pages@v2
        with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: gh-pages # The branch the action should deploy to.
-        FOLDER: test
+          target_branch: gh-pages
+          build_dir: public
+       env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
 #     - name: Try groovy
