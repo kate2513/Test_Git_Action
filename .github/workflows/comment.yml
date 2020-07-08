@@ -85,8 +85,7 @@ jobs:
        uses: ad-m/github-push-action@v0.6.0
        with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        directory: kate2513.github.io
-        repository: kate2513/kate2513.github.io
+
 #     - name: Try groovy
 #       run: |
 #         mv config.xml ./contribution/checkstyle-tester/
