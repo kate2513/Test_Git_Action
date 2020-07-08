@@ -48,6 +48,10 @@ jobs:
         repository: checkstyle/contribution
         path: contribution
          
+     - name: Print branch
+       run: |
+         echo ${GITHUB_REF}
+       
      - name: Check what in dir
        run: ls -la
 #     - name: Create a message
