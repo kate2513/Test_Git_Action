@@ -11,6 +11,7 @@ jobs:
     env:
       pr_body: ${{ github.event.pull_request.body }}
       issue_body: ${{github.event.issue.body}}
+      username: ${{github.actor}}
     runs-on: ubuntu-latest
 
     steps: 
@@ -20,7 +21,7 @@ jobs:
         echo "${{env.issue_body}}" > text
         echo "${{env.pr_body}}" > text_pr
         cat text_pr >> text
-        echo ${GITHUB_CONTEXT}
+        echo ${{env.username}}
        
      - name: Parse PR body
        run: |
