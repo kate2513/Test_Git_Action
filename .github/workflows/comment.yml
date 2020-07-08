@@ -60,7 +60,7 @@ jobs:
          mvn -version
          sudo apt install groovy
          groovy -version
-         groovy diff.groovy -r ../../checkstyle -b master -p ${GITHUB_HEAD_REF} -c ../../config.xml -l ../../proj.pro
+         groovy diff.groovy -r ../../checkstyle -b master -p kate2513-patch-1 -c ../../config.xml -l ../../proj.pro
      
      - name: Check what in dir
        run: ls -la
