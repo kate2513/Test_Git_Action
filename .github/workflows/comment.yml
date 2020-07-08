@@ -63,6 +63,7 @@ jobs:
        
      - name: Try groovy
        run: |
+         ls -la
          cd contribution/checkstyle-tester
          ls -la
          java -version
