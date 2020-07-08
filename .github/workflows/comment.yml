@@ -56,6 +56,9 @@ jobs:
        run: |
          cd contribution/checkstyle-tester
          ls -la
+         java -version
+         mvn -version
+         groovy -version
          groovy diff.groovy -r ../../checkstyle -b master -p ${GITHUB_HEAD_REF} -c ../../config.xml -l ../../proj.pro
      
      - name: Check what in dir
