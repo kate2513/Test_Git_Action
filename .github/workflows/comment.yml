@@ -50,7 +50,7 @@ jobs:
          
      - name: Print branch
        run: |
-         echo ${GITHUB_REF}
+         echo ${GITHUB_HEAD_REF}
        
      - name: Check what in dir
        run: ls -la
