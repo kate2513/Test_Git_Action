@@ -58,6 +58,7 @@ jobs:
          ls -la
          java -version
          mvn -version
+         sdk -version
          groovy -version
          groovy diff.groovy -r ../../checkstyle -b master -p ${GITHUB_HEAD_REF} -c ../../config.xml -l ../../proj.pro
      
