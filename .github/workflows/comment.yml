@@ -69,21 +69,21 @@ jobs:
        
      - name: Add file
        run: |
-        echo "test message" > message
-        cp message ./kate2513.github.io/
         cd kate2513.github.io
         ls -la
-        git add --all
-        git config --local user.email "katy.s.golovina@gmail.com"
-        git config --local user.name "kate2513"
-        git commit -m "Commit from GitHub Action"
-       
-     - name: Push Report
-       uses: ad-m/github-push-action@v0.6.0
+        mkdir test
+        cd test
+        echo "test message" > message
+        ls -la
+        cd ../
+        
+     - name: Push
+       uses: JamesIves/github-pages-deploy-action@releases/v3
        with:
-        github_token: ${{ secrets.MY_TOKEN }}
-        directory: kate2513.github.io
-        repository: kate2513/kate2513.github.io
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: test
+
 
 #     - name: Try groovy
 #       run: |
