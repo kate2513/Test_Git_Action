@@ -42,10 +42,9 @@ jobs:
        uses: actions/checkout@v2
        with:
         repository: ${{env.username}}/checkstyle
+        token: ${{secrets.MY_TOKEN}}
         path: checkstyle
         fetch-depth: 0
-        token: ${{secrets.MY_TOKEN}}
-        
         
      - name: Check branches
        run: |
