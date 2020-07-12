@@ -5,33 +5,39 @@ on:
     types: [opened, reopened, synchronize, edited]
   issue_comment:
     types: [created]
-
+env:
+  pr_body: ${{ github.event.pull_request.body }}
+  issue_body: ${{github.event.issue.body}}
 
 jobs:
-  job1:
-    if: github.event_name == 'pull_request'
-    env:
-     pr_body: ${{ github.event.pull_request.body }}  
+  Check-if-needed:
     runs-on: ubuntu-latest
 
     steps:        
-     - name: Get body
+     - name: Check message
+       if: github.event_name == 'issue_comment'
+       env:
+         comment: ${{ toJson(github.event.issue)}}
        run: |
-        echo "${{env.pr_body}}" > text
-        cat text
+        echo "${{env.comment}}" 
   
-  job2:
-    if: github.event_name == 'issue_comment'
+  Get-Body:
+    needs: [Check-if-needed]
     runs-on: ubuntu-latest
-    env:
-      issue_body: ${{github.event.issue.body}}
     steps:
-      - name: Issue body
+      - name: Issue Body
+        if: github.event_name == 'issue_comment'
         run: |
          echo "${{env.issue_body}}" > text
          cat text
+         
+      - name: PR body
+        if: github.event_name == 'pull_request' 
+        run: |
+         echo "${{env.pr_body}}" > text
+         cat text
+         
   job3:
-    needs: [job1]
     runs-on: ubuntu-latest
     steps:
       - name: something
