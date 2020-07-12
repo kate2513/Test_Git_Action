@@ -23,5 +23,5 @@ jobs:
        if: github.event_name == 'pull_request'
        run: echo "${{env.pr_body}}" > text
      
-     - name: show user
-       run: echo "${{github.actor}}"
+     - name: show info
+       run: echo "${{toJSON(github)}}"
