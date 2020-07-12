@@ -24,4 +24,4 @@ jobs:
        run: echo "${{env.pr_body}}" > text
      
      - name: show info
-       run: echo "${{toJSON(github)}}"
+       run: echo "${{toJSON(github.event)}}"
