@@ -13,23 +13,26 @@ jobs:
     outputs:
       proj_link: ${{ steps.parse.outputs.proj_link }}
       config_link: ${{ steps.parse.outputs.config_link }}
-
+      user: ${{ steps.branch.outputs.user }}
+      branch: ${{ steps.branch.outputs.branch }}
+      
     steps:
-     
-     - name: test
-       run: |
-         curl -o info.json ${{github.event.issue.pull_request.url}}
-         jq .head.label info.json
-          
 #        echo "${{ toJson(github) }}"
     
-     - name: Issue body
+     - name: Issue comment action
        if: github.event_name == 'issue_comment'
-       run: echo "${{github.event.issue.body}}" > text
+       run: |
+        echo "${{github.event.issue.body}}" > text
+        curl -o -q info.json ${{github.event.issue.pull_request.url}}
+        jq .head.label info.json > head_label
+        jq .head.ref info.json > branch
        
-     - name: PR body
+     - name: PR action
        if: github.event_name == 'pull_request'
-       run: echo "${{github.event.pull_request.body}}" > text
+       run: |
+        echo "${{github.event.pull_request.body}}" > text
+        echo ${{github.event.pull_request.head.label}} > head_label
+        echo ${{github.event.pull_request.head.ref}} > branch
 
      - name: Parse body
        id: parse
@@ -40,6 +43,13 @@ jobs:
         grep "^Diff Regression config:" text > temp || echo "fail" > temp
         sed 's/Diff Regression config: //' temp > config
         echo ::set-output name=config_link::$(cat config)
+        
+     - name: Set branch and head_label
+       id: branch
+       run: |
+        sed 's/:.*//' head_label > user
+        echo ::set-output name=user::$(cat user)
+        echo ::set-output name=branch::$(cat branch)   
   
   make_report:
     runs-on: ubuntu-latest
@@ -50,5 +60,10 @@ jobs:
         run: |
          wget -q ${{needs.parse_body.outputs.proj_link}} -O proj.properties
          wget -q ${{needs.parse_body.outputs.config_link}} -O config.xml
+      
+      - name: Get branch and user
+        run: |
+         echo "${{{needs.parse_body.outputs.user}}"
+         echo "${{{needs.parse_body.outputs.branch}}"
        
 
