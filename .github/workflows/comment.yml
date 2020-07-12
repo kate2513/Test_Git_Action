@@ -70,7 +70,7 @@ jobs:
       - name: Get branch and user
         uses: actions/checkout@v2
         with:
-         repository: ${{needs.parse_body.outputs.repo}}
+         repository: needs.parse_body.outputs.repo
          ref: master
      #     echo ${{needs.parse_body.outputs.user}}
      #     echo ${{needs.parse_body.outputs.branch}}
