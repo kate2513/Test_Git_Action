@@ -13,7 +13,7 @@ jobs:
     outputs:
       proj_link: ${{ steps.parse.outputs.proj_link }}
       config_link: ${{ steps.parse.outputs.config_link }}
-      user: ${{ steps.branch.outputs.user }}
+      repo: ${{ steps.branch.outputs.repo }}
       branch: ${{ steps.branch.outputs.ref }}
       
     steps:
@@ -24,14 +24,14 @@ jobs:
        run: |
         echo "${{github.event.issue.body}}" > text
         wget -q ${{github.event.issue.pull_request.url}} -O info.json
-        jq .head.label info.json > head_label.txt
+        jq .repo.full_name info.json > head_label.txt
         jq .head.ref info.json > branch
        
      - name: PR action
        if: github.event_name == 'pull_request'
        run: |
         echo "${{github.event.pull_request.body}}" > text
-        echo ${{github.event.pull_request.head.label}} > head_label.txt
+        echo ${{github.event.pull_request.repo.full_name}} > head_label.txt
         echo ${{github.event.pull_request.head.ref}} > branch
 
      - name: Parse body
@@ -47,16 +47,15 @@ jobs:
      - name: Set branch and head_label
        id: branch
        run: |
-        cut -d':' -f1 head_label.txt > user.txt
-        echo ::set-output name=user::$(cat user.txt)
+        echo ::set-output name=repo::$(cat head_label.txt)
         echo ::set-output name=ref::$(cat branch)
       
      - name: info
        run: |
-        cat user.txt
+        cat head_label.txt
         cat branch
-  #      echo ${{steps.branch.outputs.ref}}
-  #      echo ${{steps.branch.outputs.user}}
+        echo ${{steps.branch.outputs.ref}}
+        echo ${{steps.branch.outputs.repo}}
   
   make_report:
     runs-on: ubuntu-latest
@@ -71,7 +70,7 @@ jobs:
       - name: Get branch and user
         uses: actions/checkout@v2
         with:
-         repository: ${{needs.parse_body.outputs.user}}/Test_Git_Action
+         repository: ${{needs.parse_body.outputs.repo}}
      #     echo ${{needs.parse_body.outputs.user}}
      #     echo ${{needs.parse_body.outputs.branch}}
        
