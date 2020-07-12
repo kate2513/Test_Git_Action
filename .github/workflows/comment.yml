@@ -20,7 +20,7 @@ jobs:
        run: echo "${{env.issue_body}}" > text
        
      - name: Get PR body
-       if: github.event.name == 'pull_request'
+       if: github.event_name == 'pull_request'
        run: echo "${{env.pr_body}}" > text
      
      - name: show user
