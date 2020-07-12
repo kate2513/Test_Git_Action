@@ -5,9 +5,6 @@ on:
     types: [opened, reopened, synchronize, edited]
   issue_comment:
     types: [created]
-env:
-  pr_body: ${{ github.event.pull_request.body }}
-  issue_body: ${{github.event.issue.body}}
 
 jobs:
   make_report:
