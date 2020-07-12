@@ -53,7 +53,7 @@ jobs:
       
      - name: info
        run: |
-        cat user
+        cat user.txt
         cat branch
         echo ${{steps.branch.outputs.ref}}
         echo ${{steps.branch.outputs.user}}
