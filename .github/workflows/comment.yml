@@ -47,7 +47,7 @@ jobs:
      - name: Set branch and head_label
        id: branch
        run: |
-        awk -F: '{print $1}' head_label > user
+        sed "s/:.*//" head_label > user
         echo ::set-output name=user::$(cat user)
         echo ::set-output name=ref::$(cat branch)
       
