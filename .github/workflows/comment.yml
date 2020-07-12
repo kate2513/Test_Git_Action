@@ -72,8 +72,6 @@ jobs:
         uses: actions/checkout@v2
         with:
          repository: ${{needs.parse_body.outputs.user}}/Test_Git_Action
-         path: checkstyle
-         fetch-depth: 0
      #     echo ${{needs.parse_body.outputs.user}}
      #     echo ${{needs.parse_body.outputs.branch}}
        
