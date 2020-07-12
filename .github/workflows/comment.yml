@@ -17,7 +17,11 @@ jobs:
     steps:
      
      - name: test
-       run: echo "${{ toJson(github) }}"
+       run: |
+         curl -o info.json ${{github.event.issue.pull_request.url}}
+         jq .head.label info.json
+          
+#        echo "${{ toJson(github) }}"
     
      - name: Issue body
        if: github.event_name == 'issue_comment'
