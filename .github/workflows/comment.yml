@@ -48,6 +48,8 @@ jobs:
        id: branch
        run: |
         sed 's/:.*//' head_label > user
+        cat user
+        cat branch
         echo ::set-output name=user::$(cat user)
         echo ::set-output name=branch::$(cat branch)   
   
