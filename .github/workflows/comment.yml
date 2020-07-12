@@ -55,8 +55,8 @@ jobs:
        run: |
         cat head_label
         cat branch
-        echo "${{steps.branch.outputs.ref}}"
-        echo "${{steps.branch.outputs.user}}"
+        echo ${{steps.branch.outputs.ref}}
+        echo ${{steps.branch.outputs.user}}
   
   make_report:
     runs-on: ubuntu-latest
@@ -70,7 +70,7 @@ jobs:
       
       - name: Get branch and user
         run: |
-          echo "${{needs.parse_body.outputs.user}}"
-          echo "${{needs.parse_body.outputs.branch}}"
+          echo ${{needs.parse_body.outputs.user}}
+          echo ${{needs.parse_body.outputs.branch}}
        
 
