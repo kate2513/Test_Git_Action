@@ -25,9 +25,3 @@ jobs:
      
      - name: show user
        run: echo "${{github.actor}}"
-
-
-
-
-
- 
