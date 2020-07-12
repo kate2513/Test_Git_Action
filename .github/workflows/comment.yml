@@ -31,10 +31,10 @@ jobs:
      - name: Parse body
        id: parse
        run: |
-        grep "^Diff Regression projects:" text > temp
-        sed 's/Diff Regression projects: //' temp > proj
-        grep "^Diff Regression config:" text > temp
-        sed 's/Diff Regression config: //' temp > config
+        grep "^Diff Regression projects:" text > temp || echo "No diff regression projects found"
+        sed 's/Diff Regression projects: //' temp > proj || echo "" > proj
+        grep "^Diff Regression config:" text > temp || echo "No diff regression congig found"
+        sed 's/Diff Regression config: //' temp > config || echo "" > config
         cat proj
         cat config
         
