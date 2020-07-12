@@ -47,8 +47,8 @@ jobs:
      - name: Set branch and head_label
        id: branch
        run: |
-        cut -d':' -f1 head_label > user
-        echo ::set-output name=user::$(cat head_label)
+        cut -d':' -f1 head_label > user.txt
+        echo ::set-output name=user::$(cat user.txt)
         echo ::set-output name=ref::$(cat branch)
       
      - name: info
