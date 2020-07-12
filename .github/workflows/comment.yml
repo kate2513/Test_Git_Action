@@ -7,37 +7,37 @@ on:
     types: [created]
 
 jobs:
-  make_report:
+  parse_body:
     if: (github.event_name == 'pull_request') || (github.event_name == 'issue_comment' && github.event.comment.body == 'report')
     runs-on: ubuntu-latest
+    outputs:
+      proj_link: ${{ steps.parse.outputs.proj_link }}
+      config_link: ${{ steps.parse.outputs.config_link }}
 
     steps:        
-     - name: Issue action
+     - name: Issue body
        if: github.event_name == 'issue_comment'
-       run: |
-        echo "${{github.event.issue.body}}" > text
-        echo "${{github.event.issue.user.login}}" > user
+       run: echo "${{github.event.issue.body}}" > text
        
-     - name: PR action
+     - name: PR body
        if: github.event_name == 'pull_request'
-       run: |
-        echo "${{github.event.pull_request.body}}" > text
-        echo "${{github.event.pull_request.user.login}}" > user
+       run: echo "${{github.event.pull_request.body}}" > text
 
-     - name: Set username to outputs
-       id: setUser
-       run: echo ::set-output name=pr_creator::$(cat user)
-    
      - name: Parse body
        id: parse
        run: |
         grep "^Diff Regression projects:" text > temp || echo "No diff regression projects found"
         sed 's/Diff Regression projects: //' temp > proj || echo "" > proj
-        grep "^Diff Regression config:" text > temp || echo "No diff regression congig found"
+        echo ::set-output name=proj_link::$(cat proj)
+        grep "^Diff Regression config:" text > temp || echo "No diff regression config found"
         sed 's/Diff Regression config: //' temp > config || echo "" > config
-        cat proj
-        cat config
-        
-     - name: show info
-       run: echo '${{steps.setUser.outputs.pr_creator}}'
-#       run: echo "${{toJSON(github.event)}}"
+        echo ::set-output name=config_link::$(cat config)
+  
+  make_report:
+    runs-on: ubuntu-latest
+    needs: parse_body
+    if: needs.parse_body.outputs.proj_link != "" && needs.parse_body.outputs.config_link != ""
+    steps:
+      - name: Test
+        run: |
+         echo ${{needs.parse_body.outputs.proj_link}} ${{needs.parse_body.outputs.config_link}}
