@@ -17,7 +17,7 @@ jobs:
      - name: Check message
        if: github.event_name == 'issue_comment'
        env:
-         comment: ${{ toJson(github.event.issue)}}
+         comment: ${{ toJson(github.event)}}
        run: |
         echo "${{env.comment}}" 
   
