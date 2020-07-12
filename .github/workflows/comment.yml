@@ -39,4 +39,4 @@ jobs:
     if: (${{needs.parse_body.outputs.proj_link}} != "") && (${{needs.parse_body.outputs.config_link}} != "")
     steps:
       - name: Test
-        run: echo "${{needs.parse_body.outputs.proj_link}} ${{needs.parse_body.outputs.config_link}}"
+        run: echo "${{jobs.parse_body.outputs.proj_link}} ${{jobs.parse_body.outputs.config_link}}"
