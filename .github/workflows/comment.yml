@@ -14,7 +14,11 @@ jobs:
       proj_link: ${{ steps.parse.outputs.proj_link }}
       config_link: ${{ steps.parse.outputs.config_link }}
 
-    steps:        
+    steps:
+     - name: test
+       run: |
+        echo ${{toJson(github)}}
+    
      - name: Issue body
        if: github.event_name == 'issue_comment'
        run: echo "${{github.event.issue.body}}" > text
@@ -42,4 +46,5 @@ jobs:
         run: |
          wget -q ${{needs.parse_body.outputs.proj_link}} -O proj.properties
          wget -q ${{needs.parse_body.outputs.config_link}} -O config.xml
-         ls -la
+       
+
