@@ -15,9 +15,9 @@ jobs:
       config_link: ${{ steps.parse.outputs.config_link }}
 
     steps:
+     
      - name: test
-       run: |
-        echo ${{toJson(github)}}
+       run: echo "${{ toJson(github) }}"
     
      - name: Issue body
        if: github.event_name == 'issue_comment'
