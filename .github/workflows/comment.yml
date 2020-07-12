@@ -24,14 +24,14 @@ jobs:
        run: |
         echo "${{github.event.issue.body}}" > text
         wget -q ${{github.event.issue.pull_request.url}} -O info.json
-        jq .repo.full_name info.json > head_label.txt
+        jq .head.repo.full_name info.json > head_label.txt
         jq .head.ref info.json > branch
        
      - name: PR action
        if: github.event_name == 'pull_request'
        run: |
         echo "${{github.event.pull_request.body}}" > text
-        echo ${{github.event.pull_request.repo.full_name}} > head_label.txt
+        echo ${{github.event.pull_request.head.repo.full_name}} > head_label.txt
         echo ${{github.event.pull_request.head.ref}} > branch
 
      - name: Parse body
