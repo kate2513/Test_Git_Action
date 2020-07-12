@@ -15,13 +15,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:        
-     - name: Get issue body
+     - name: Issue action
        if: github.event_name == 'issue_comment'
-       run: echo "${{env.issue_body}}" > text
+       run: |
+        echo "${{github.event.issue.body}}" > text
+        echo "${{github.event.issue.user.login}}" > user
        
-     - name: Get PR body
+     - name: PR action
        if: github.event_name == 'pull_request'
-       run: echo "${{env.pr_body}}" > text
-     
+       run: |
+        echo "${{github.event.pull_request.body}}" > text
+        echo "${{github.event.pull_request.user.login}}" > user
+
+     - name: show result
+       id: setUser
+       run: |
+         cat text
+         cat user
+         run: echo ::set-output name=pr_creator::$(cat user)
+        
+        
      - name: show info
-       run: echo "${{toJSON(github.event)}}"
+       run: echo '${{steps.setUser.outputs.pr_creator}}'
+#       run: echo "${{toJSON(github.event)}}"
