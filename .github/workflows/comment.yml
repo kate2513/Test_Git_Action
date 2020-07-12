@@ -55,8 +55,8 @@ jobs:
        run: |
         cat user
         cat branch
-        echo "${{steps.branch.outputs.user}}"
         echo "${{steps.branch.outputs.ref}}"
+#        echo "${{steps.branch.outputs.user}}"
   
   make_report:
     runs-on: ubuntu-latest
