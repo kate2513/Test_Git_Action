@@ -32,6 +32,11 @@ jobs:
         grep "^Diff Regression config:" text > temp || echo "No diff regression config found"
         sed 's/Diff Regression config: //' temp > config || echo "" > config
         echo ::set-output name=config_link::$(cat config)
+        
+     - name: show
+       run: |
+        echo ${{outputs.proj_link}}
+        echo ${{outputs.config_link
   
   make_report:
     runs-on: ubuntu-latest
