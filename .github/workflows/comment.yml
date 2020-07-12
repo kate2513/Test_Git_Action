@@ -10,35 +10,24 @@ env:
   issue_body: ${{github.event.issue.body}}
 
 jobs:
-  Check-if-needed:
+  make_report:
+    if: github.event_name == 'pull_request' || (github.event_name == 'issue_comment' && github.event.comment.body == 'report')
     runs-on: ubuntu-latest
 
     steps:        
-     - name: Check message
+     - name: Get issue body
        if: github.event_name == 'issue_comment'
-       env:
-         comment: ${{ toJson(github.event)}}
-       run: |
-        echo "${{env.comment}}" 
-  
-  Get-Body:
-    needs: [Check-if-needed]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Issue Body
-        if: github.event_name == 'issue_comment'
-        run: |
-         echo "${{env.issue_body}}" > text
-         cat text
-         
-      - name: PR body
-        if: github.event_name == 'pull_request' 
-        run: |
-         echo "${{env.pr_body}}" > text
-         cat text
-         
-  job3:
-    runs-on: ubuntu-latest
-    steps:
-      - name: something
-        run: cat text
+       run: echo "${{env.issue_body}}" > text
+       
+     - name: Get PR body
+       if: github.event.name == 'pull_request'
+       run: echo "${{env.pr_body}}" > text
+     
+     - name: show user
+       run: echo "${{github.actor}}"
+
+
+
+
+
+ 
