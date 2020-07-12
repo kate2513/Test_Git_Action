@@ -32,16 +32,14 @@ jobs:
         grep "^Diff Regression config:" text > temp || echo "No diff regression config found"
         sed 's/Diff Regression config: //' temp > config || echo "" > config
         echo ::set-output name=config_link::$(cat config)
-        
-     - name: show
-       run: |
-        echo ${{outputs.proj_link}}
-        echo ${{outputs.config_link
   
   make_report:
     runs-on: ubuntu-latest
     needs: parse_body
-    if: (${{needs.parse_body.outputs.proj_link}} != "") && (${{needs.parse_body.outputs.config_link}} != "")
+#    if: (${{needs.parse_body.outputs.proj_link}} != "") && (${{needs.parse_body.outputs.config_link}} != "")
     steps:
       - name: Test
-        run: echo "${{needs.parse_body.outputs.proj_link}} ${{needs.parse_body.outputs.config_link}}"
+        run: |
+         echo "${{needs.parse_body.outputs.proj_link}}" > link
+         ls -la
+         cat link
