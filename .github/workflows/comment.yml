@@ -6,127 +6,33 @@ on:
   issue_comment:
     types: [created]
 
+
 jobs:
-  make_report:
+  job1:
+    if: github.event_name == 'pull_request'
     env:
-      pr_body: ${{ github.event.pull_request.body }}
-      issue_body: ${{github.event.issue.body}}
-      username: ${{github.actor}}
+     pr_body: ${{ github.event.pull_request.body }}  
     runs-on: ubuntu-latest
 
-    steps: 
-       
+    steps:        
      - name: Get body
        run: |
-        echo "${{env.issue_body}}" > text
-        echo "${{env.pr_body}}" > text_pr
-        cat text_pr >> text
-        echo ${{env.username}}
-       
-     - name: Parse PR body
-       run: |
-        grep "^Diff Regression projects:" text > temp
-        sed 's/Diff Regression projects: //' temp > proj
-        grep "^Diff Regression config:" text > temp
-        sed 's/Diff Regression config: //' temp > config
-        cat proj
-        cat config
-        
-     - name: Download files 
-       run: |
-        wget -q -i proj -O proj.properties
-        wget -q -i config -O config.xml
-        ls -la
-        
-     - name: Download checkstyle
-       uses: actions/checkout@v2
-       with:
-        repository: ${{env.username}}/checkstyle
-        token: ${{secrets.MY_SECRET_TOKEN}}
-        path: checkstyle
-        fetch-depth: 0
-        
-     - name: Check branches
-       run: |
-         cd checkstyle
-         git branch -r
-         git checkout -b new_branch
-         cd ../
-     
-     - name: Download contribution
-       uses: actions/checkout@v2
-       with:
-        repository: checkstyle/contribution
-        token: ${{secrets.MY_SECRET_TOKEN}}
-        path: contribution
-
-     - name: Download site
-       uses: actions/checkout@v2
-       with:
-         repository: kate2513/kate2513.github.io
-         path: ./kate2513.github.io
-         token: ${{secrets.MY_SECRET_TOKEN}}
-
-     - name: Check
-       run: |
-        ls -la
-        cd kate2513.github.io
-        ls -la
-
-     - name: Add and Commit Report
-       run: |
-          echo "kekek" > message.txt
-          mv message.txt ./kate2513.github.io
-          cd kate2513.github.io
-          git add --all
-          git config --local user.email "katy.s.golovina@gmail.com"
-          git config --local user.name "kate2513"
-          git commit -m "Commit from GitHub Action"
-          
-     - name: Push Report
-       uses: ad-m/github-push-action@v0.6.0
-       with:
-          github_token: ${{ secrets.MY_SECRET_TOKEN }}
-          directory: kate2513.github.io
-          repository: kate2513/kate2513.github.io 
-
-
-#     - name: Try groovy
-#       run: |
-#         mv config.xml ./contribution/checkstyle-tester/
-#         mv proj.properties ./contribution/checkstyle-tester/
-#         ls -la
-#         cd contribution/checkstyle-tester
-#         ls -la
-#         java -version
-#         mvn -version
-#         sudo apt install groovy
-#         groovy -version
-#         groovy diff.groovy -r ../../checkstyle -b master -p new_branch -c config.xml -l proj.properties
-     
-     - name: Check what in dir
-       run: ls -la
-#     - name: Create a message
-#       run: |
-#        sed -n 1,2p proj.properties > message
-#        sed -n 1,2p config.xml > temp
-#        cat temp >> message
-#        echo Name of head branch: ${GITHUB_HEAD_REF} > temp
-#        cat temp >> message
-#        echo Name of base branch: ${GITHUB_BASE_REF} > temp
-#        cat temp >> message
-#        cat message
-        
-     - name: Set output
-       id: out
-       run: echo ::set-output name=message::$(cat message)   
-     - name: print output
-       run: echo '${{steps.out.outputs.message}}'
-#    - name: Checkout
-#      uses: actions/checkout@v1
-      
-     - name: Comment PR
-       uses:  kate2513/javascript-test-action@master 
-       with:
-        message: ${{steps.out.outputs.message}}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        echo "${{env.pr_body}}" > text
+        cat text
+  
+  job2:
+    if: github.event_name == 'issue_comment'
+    runs-on: ubuntu-latest
+    env:
+      issue_body: ${{github.event.issue.body}}
+    steps:
+      - name: Issue body
+        run: |
+         echo "${{env.issue_body}}" > text
+         cat text
+  job3:
+    needs: [job1,job2]
+    runs-on: ubuntu-latest
+    steps:
+      - name: something
+        run: cat text
