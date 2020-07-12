@@ -41,7 +41,7 @@ jobs:
   make_report:
     runs-on: ubuntu-latest
     needs: parse_body
-    if: (needs.parse_body.outputs.proj_link != "fail") && (needs.parse_body.outputs.config_link != "fail")
+    if: (needs.parse_body.outputs.proj_link != 'fail') && (needs.parse_body.outputs.config_link != 'fail')
     steps:
       - name: Test
         run: |
