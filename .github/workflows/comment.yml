@@ -65,7 +65,6 @@ jobs:
       
       - name: Get branch and user
         run: |
-         echo "${{needs.parse_body.outputs.user}}"
-         echo "${{needs.parse_body.outputs.branch}}"
+          echo "${{needs.parse_body.outputs.user}}"
        
 
