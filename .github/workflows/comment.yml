@@ -14,7 +14,7 @@ jobs:
       proj_link: ${{ steps.parse.outputs.proj_link }}
       config_link: ${{ steps.parse.outputs.config_link }}
       user: ${{ steps.branch.outputs.user }}
-      branch: ${{ steps.branch.outputs.branch }}
+      branch: ${{ steps.branch.outputs.ref }}
       
     steps:
 #        echo "${{ toJson(github) }}"
@@ -47,11 +47,16 @@ jobs:
      - name: Set branch and head_label
        id: branch
        run: |
-        sed 's/:.*//' head_label > user
+        sed 's/:.*//' head_label > user 
+        echo ::set-output name=user::$(cat user)
+        echo ::set-output name=ref::$(cat branch)
+      
+     - name: info
+       run: |
         cat user
         cat branch
-        echo ::set-output name=user::$(cat user)
-        echo ::set-output name=branch::$(cat branch)   
+        echo "${{steps.branch.outputs.user}}"
+        echo "${{steps.branch.outputs.ref}}"
   
   make_report:
     runs-on: ubuntu-latest
