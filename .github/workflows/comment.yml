@@ -27,16 +27,16 @@ jobs:
        id: parse
        run: |
         grep "^Diff Regression projects:" text > temp || echo "No diff regression projects found"
-        sed 's/Diff Regression projects: //' temp > proj || echo "" > proj
+        sed 's/Diff Regression projects: //' temp > proj || echo "fail" > proj
         echo ::set-output name=proj_link::$(cat proj)
         grep "^Diff Regression config:" text > temp || echo "No diff regression config found"
-        sed 's/Diff Regression config: //' temp > config || echo "" > config
+        sed 's/Diff Regression config: //' temp > config || echo "fail" > config
         echo ::set-output name=config_link::$(cat config)
   
   make_report:
     runs-on: ubuntu-latest
     needs: parse_body
-#    if: (${{needs.parse_body.outputs.proj_link}} != "") && (${{needs.parse_body.outputs.config_link}} != "")
+    if: (${{needs.parse_body.outputs.proj_link}} != "fail") && (${{needs.parse_body.outputs.config_link}} != "fail")
     steps:
       - name: Test
         run: |
