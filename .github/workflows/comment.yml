@@ -23,7 +23,7 @@ jobs:
        if: github.event_name == 'issue_comment'
        run: |
         echo "${{github.event.issue.body}}" > text
-        curl -o info.json ${{github.event.issue.pull_request.url}}
+        wget -q ${{github.event.issue.pull_request.url}} -O info.json
         jq .head.label info.json > head_label
         jq .head.ref info.json > branch
        
