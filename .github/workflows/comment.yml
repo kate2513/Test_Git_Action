@@ -24,14 +24,14 @@ jobs:
        run: |
         echo "${{github.event.issue.body}}" > text
         wget -q ${{github.event.issue.pull_request.url}} -O info.json
-        jq .head.label info.json > head_label
+        jq .head.label info.json > head_label.txt
         jq .head.ref info.json > branch
        
      - name: PR action
        if: github.event_name == 'pull_request'
        run: |
         echo "${{github.event.pull_request.body}}" > text
-        echo ${{github.event.pull_request.head.label}} > head_label
+        echo ${{github.event.pull_request.head.label}} > head_label.txt
         echo ${{github.event.pull_request.head.ref}} > branch
 
      - name: Parse body
@@ -47,7 +47,7 @@ jobs:
      - name: Set branch and head_label
        id: branch
        run: |
-        cut -d':' -f1 head_label > user.txt
+        cut -d':' -f1 head_label.txt > user.txt
         echo ::set-output name=user::$(cat user.txt)
         echo ::set-output name=ref::$(cat branch)
       
