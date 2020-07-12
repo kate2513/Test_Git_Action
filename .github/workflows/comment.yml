@@ -55,8 +55,8 @@ jobs:
        run: |
         cat user.txt
         cat branch
-        echo ${{steps.branch.outputs.ref}}
-        echo ${{steps.branch.outputs.user}}
+  #      echo ${{steps.branch.outputs.ref}}
+  #      echo ${{steps.branch.outputs.user}}
   
   make_report:
     runs-on: ubuntu-latest
@@ -69,8 +69,12 @@ jobs:
          wget -q ${{needs.parse_body.outputs.config_link}} -O config.xml
       
       - name: Get branch and user
-        run: |
-          echo ${{needs.parse_body.outputs.user}}
-          echo ${{needs.parse_body.outputs.branch}}
+        uses: actions/checkout@v2
+        with:
+         repository: ${{needs.parse_body.outputs.user}}/checkstyle
+         path: checkstyle
+         fetch-depth: 0
+     #     echo ${{needs.parse_body.outputs.user}}
+     #     echo ${{needs.parse_body.outputs.branch}}
        
 
