@@ -71,6 +71,19 @@ jobs:
         uses: actions/checkout@v2
         with:
          repository: ${{needs.parse_body.outputs.user}}/Test_Git_Action
+         ref: master
+         fetch-depth: 0
+         path: dir
+      
+      - name: Update master
+        run: |
+          cd dir
+          git remote add upstream https://github.com/kate2513/Test_Git_Action.git
+          git fetch upstream
+          git merge upstream/master
+          git branch -r
+          cd ../
+          
       - name: show info
         run: |
          echo ${{needs.parse_body.outputs.user}}
