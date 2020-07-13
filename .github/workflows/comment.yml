@@ -74,17 +74,20 @@ jobs:
          ref: master
          fetch-depth: 0
          path: dir
-      
-      - name: Update master
-        run: |
-          cd dir
-          git remote add upstream https://github.com/kate2513/Test_Git_Action.git
-          git fetch upstream
-          git merge upstream/master
-          git branch -r
-          cd ../
           
       - name: show info
         run: |
          echo ${{needs.parse_body.outputs.user}}
          echo ${{needs.parse_body.outputs.branch}}
+        
+      - name: Message
+        id: out
+        run: |
+         echo "Diff Report ..." > message
+         echo ::set-output name=message::$(cat message)
+      
+      - name: Comment PR
+        uses:  kate2513/javascript-test-action@master 
+        with:
+         message: ${{steps.out.outputs.message}}
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
