@@ -21,7 +21,6 @@ jobs:
      - name: Test Mercurial
        run: |
          sudo apt-get install mercurial
-         mercurial -version
        
      - name: Issue comment action
        if: github.event_name == 'issue_comment'
