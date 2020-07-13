@@ -23,15 +23,15 @@ jobs:
        if: github.event_name == 'issue_comment'
        run: |
         echo "${{github.event.issue.body}}" > text
+        echo "${{github.event.issue.user.login}}" > user
         wget -q ${{github.event.issue.pull_request.url}} -O info.json
-        jq .head.repo.full_name info.json > head_label.txt
         jq .head.ref info.json > branch
        
      - name: PR action
        if: github.event_name == 'pull_request'
        run: |
         echo "${{github.event.pull_request.body}}" > text
-        echo ${{github.event.pull_request.head.repo.full_name}} > head_label.txt
+        echo ${{github.event.pull_request.user.login}} > user
         echo ${{github.event.pull_request.head.ref}} > branch
 
      - name: Parse body
@@ -47,15 +47,15 @@ jobs:
      - name: Set branch and head_label
        id: branch
        run: |
-        echo ::set-output name=repo::$(cat head_label.txt)
+        echo ::set-output name=user::$(cat user)
         echo ::set-output name=ref::$(cat branch)
       
      - name: info
        run: |
-        cat head_label.txt
+        cat user
         cat branch
         echo ${{steps.branch.outputs.ref}}
-        echo ${{steps.branch.outputs.repo}}
+        echo ${{steps.branch.outputs.user}}
   
   make_report:
     runs-on: ubuntu-latest
@@ -70,9 +70,8 @@ jobs:
       - name: Get branch and user
         uses: actions/checkout@v2
         with:
-         repository: needs.parse_body.outputs.repo
-         ref: master
-     #     echo ${{needs.parse_body.outputs.user}}
-     #     echo ${{needs.parse_body.outputs.branch}}
-       
-
+         repository: ${{needs.parse_body.outputs.user}}/Test_Git_Action
+      - name: show info
+        run: |
+         echo ${{needs.parse_body.outputs.user}}
+         echo ${{needs.parse_body.outputs.branch}}
