@@ -13,7 +13,7 @@ jobs:
     outputs:
       proj_link: ${{ steps.parse.outputs.proj_link }}
       config_link: ${{ steps.parse.outputs.config_link }}
-      repo: ${{ steps.branch.outputs.repo }}
+      user: ${{ steps.branch.outputs.user }}
       branch: ${{ steps.branch.outputs.ref }}
       
     steps:
