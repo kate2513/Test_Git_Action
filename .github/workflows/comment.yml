@@ -20,7 +20,7 @@ jobs:
 #        echo "${{ toJson(github) }}"
      - name: Test Mercurial
        run: |
-         apt-get install mercurial
+         sudo apt-get install mercurial
          mercurial -version
        
      - name: Issue comment action
