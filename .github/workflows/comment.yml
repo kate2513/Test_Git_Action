@@ -78,6 +78,11 @@ jobs:
          ref: master
          path: test_git_action
 
+      - name: Download contribution
+        uses: actions/checkout@v2
+        with:
+         repository: checkstyle/contribution
+         path: contribution
 
       - name: Message
         id: out
@@ -90,7 +95,7 @@ jobs:
          echo ::set-output name=message::$(cat message)
       
       - name: Comment PR
-        uses:  ./test_git_action/comment-action/
+        uses:  ./contribution/comment-action/
         with:
          message: ${{steps.out.outputs.message}}
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
