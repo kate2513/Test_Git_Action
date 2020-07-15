@@ -83,14 +83,14 @@ jobs:
         id: out
         run: |
          ls -la
-         cd comment-action
+         cd test-git-action/comment-action/
          ls -la
-         cd ../
+         cd ../../
          echo "Diff Report ..." > message
          echo ::set-output name=message::$(cat message)
       
       - name: Comment PR
-        uses:  ./test_git-action/comment-action
+        uses:  ./test_git-action/comment-action/
         with:
          message: ${{steps.out.outputs.message}}
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
