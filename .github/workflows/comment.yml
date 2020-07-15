@@ -83,6 +83,9 @@ jobs:
         id: out
         run: |
          ls -la
+         cd comment-action
+         ls -la
+         cd ../
          echo "Diff Report ..." > message
          echo ::set-output name=message::$(cat message)
       
