@@ -70,27 +70,24 @@ jobs:
          wget -q ${{needs.parse_body.outputs.proj_link}} -O proj.properties
          wget -q ${{needs.parse_body.outputs.config_link}} -O config.xml
       
-      - name: Get branch and user
+          
+      - name: Download test_git_action
         uses: actions/checkout@v2
         with:
-         repository: ${{needs.parse_body.outputs.user}}/Test_Git_Action
+         repository: kate2513/Test_Git_Action
          ref: master
-         fetch-depth: 0
-         path: dir
-          
-      - name: show info
-        run: |
-         echo ${{needs.parse_body.outputs.user}}
-         echo ${{needs.parse_body.outputs.branch}}
-        
+         path: test_git_action
+
+
       - name: Message
         id: out
         run: |
+         ls -la
          echo "Diff Report ..." > message
          echo ::set-output name=message::$(cat message)
       
       - name: Comment PR
-        uses:  kate2513/javascript-test-action@master 
+        uses:  ./test_git-action/comment-action
         with:
          message: ${{steps.out.outputs.message}}
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
